@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Guate Disco - Inicio de sesión</title>
+    </h:head>
+    <h:body>
+        <center>
+            <div id="imgGDLogin" style="             background: url(&quot;../images/disc6.png&quot;);             width: 256px;             height: 256px;"></div>
+            <h:form id="formId" style="width: 500px">
+                <p:panel id="panel" header="Crear una cuenta" style="margin-bottom:10px;">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <h:outputLabel for="nombres" value="Nombres:" />
+                        <p:inputText id="nombres" required="true" value="#{registrarPropietarioBean.nombres}"/>
+                        <p:message for="nombres" display="icon" />
+                        
+                        <h:outputLabel for="apellidos" value="Apellidos:" />
+                        <p:inputText id="apellidos" required="true" value="#{registrarPropietarioBean.apellidos}"/>
+                        <p:message for="apellidos" display="icon" />
+                        
+                        <h:outputLabel for="userName" value="Nombre de usuario:" />
+                        <p:inputText id="userName" required="true" value="#{registrarPropietarioBean.userName}"/>
+                        <p:message for="userName" display="icon" />
+
+                        <p:outputLabel for="password" value="Clave de acceso:" />
+                        <p:inputText id="password" type="password" required="true" value="#{registrarPropietarioBean.password}"/>
+                        <p:message for="password" display="icon" />
+
+                        <h:outputLabel for="repPassword" value="repite tu clave de acceso:" />
+                        <p:inputText id="repPassword"  type="password" required="true" value="#{registrarPropietarioBean.repPassword}"/> 
+                        <p:message for="repPassword" display="icon" />
+                        
+                        <h:outputLabel for="correo" value="Correo electronico:" />
+                        <p:inputText id="correo" required="true" value="#{registrarPropietarioBean.correo}"/>
+                        <p:message for="correo" display="icon" />
+                        
+                    </h:panelGrid>
+                </p:panel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:commandButton value="Registrar" update="formId" 
+                                     action="#{registrarPropietarioBean.registrar}" />
+                    
+                    <p:commandButton value="Cancelar" update="panel" 
+                                     action="#{registrarPropietarioBean.cancelar}" />
+                </h:panelGrid>
+
+
+            </h:form>
+        </center>
+    </h:body>
+</html>
+

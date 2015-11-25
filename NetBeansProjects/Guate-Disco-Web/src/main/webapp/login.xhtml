@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Guate Disco - Inicio de sesión</title>
+        <link rel="shortcut icon" href="http://lineadecodigo.com/wp-content/uploads/2007/03/favicon.ico"></link>
+    </h:head>
+    <h:body>
+        <center>
+            <div id="imgGDLogin" style="             background: url(../images/disc6.png);             width: 256px;             height: 256px;"></div>
+            <h:form style="width: 500px">
+                <p:panel id="panel" header="Inicio de sesión" style="margin-bottom:10px;">
+                    <p:messages id="messages" />
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="userName" value="Nombre de usuario:" />
+                        <p:inputText id="userName" value="#{loginBean.userName}"/>
+
+                        <p:outputLabel for="password" value="Clave de acceso:" />
+                        <p:inputText id="password" type="password" value="#{loginBean.password}"/>
+
+                    </h:panelGrid>
+                </p:panel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:commandButton value="Entrar" update="panel" 
+                                     action="#{loginBean.authenticUser}" />
+                    
+                    <p:commandButton value="No tienes cuenta?" update="panel" 
+                                     action="#{loginBean.registrar}" />
+                </h:panelGrid>
+
+            </h:form>
+        </center>
+    </h:body>
+</html>
+
