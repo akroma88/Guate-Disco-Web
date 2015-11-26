@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,21 +43,30 @@ public class MisDiscosBean {
     private String latitud;
     private int telefono;
 
-
     public MisDiscosBean() throws UnsupportedEncodingException, Exception {
         Demo d = new Demo();
-        //discos = d.getDiscos("todos");
-        discos = d.getDiscos(Propietario.getId());
+        HttpSession sessionUsuario=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         
-        zonas.add(1); zonas.add(2); zonas.add(3);
-        zonas.add(4); zonas.add(5); zonas.add(6);
-        zonas.add(7); zonas.add(8); zonas.add(9);
-        zonas.add(10); zonas.add(11); zonas.add(12);
-        zonas.add(13); zonas.add(14); zonas.add(15);
+        discos = d.getDiscos(sessionUsuario.getAttribute("correoElectronico").toString());
+
+        zonas.add(1);
+        zonas.add(2);
+        zonas.add(3);
+        zonas.add(4);
+        zonas.add(5);
+        zonas.add(6);
+        zonas.add(7);
+        zonas.add(8);
+        zonas.add(9);
+        zonas.add(10);
+        zonas.add(11);
+        zonas.add(12);
+        zonas.add(13);
+        zonas.add(14);
+        zonas.add(15);
     }
 
-    
-    public void editar(ActionEvent actionEvent) throws SQLException, Exception{
+    public void editar(ActionEvent actionEvent) throws SQLException, Exception {
         Demo dd = new Demo();
 
         Disco d = new Disco();
@@ -70,17 +80,18 @@ public class MisDiscosBean {
         d.setPaginaFb(getPaginaFB());
         d.setPaginaTw(getPaginaTwitter());
         d.setTelefono(getTelefono());
-        d.setLatitud(""+getLatitud());
-        d.setAltitud(""+getAltitud());
-        
+        d.setLatitud("" + getLatitud());
+        d.setAltitud("" + getAltitud());
+
         dd.editarDisco(d);
 
-        discos = dd.getDiscos(Propietario.getId());
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Guate-Disco","Disco editada"));
+        HttpSession sessionUsuario=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        discos = dd.getDiscos(sessionUsuario.getAttribute("correoElectronico").toString());
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Guate-Disco", "Disco: "+nombre+" editada"));
     }
-    
-    
+
     public ArrayList<Disco> getDiscos() {
         return discos;
     }
@@ -94,11 +105,11 @@ public class MisDiscosBean {
     }
 
     public void setSelectDisco(Disco selectDisco) {
-        System.out.println("id: "+selectDisco.getId()+
-                " --- nombre "+selectDisco.getNombre());
-        idDisco=selectDisco.getId();
-        nombre=selectDisco.getNombre();
-        direccion= selectDisco.getDireccion();
+        System.out.println("id: " + selectDisco.getId()
+                + " --- nombre " + selectDisco.getNombre());
+        idDisco = selectDisco.getId();
+        nombre = selectDisco.getNombre();
+        direccion = selectDisco.getDireccion();
         zona = selectDisco.getZona();
         descripcion = selectDisco.getDescripcion();
         paginaWeb = selectDisco.getPaginaWeb();
@@ -205,6 +216,5 @@ public class MisDiscosBean {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
 
 }

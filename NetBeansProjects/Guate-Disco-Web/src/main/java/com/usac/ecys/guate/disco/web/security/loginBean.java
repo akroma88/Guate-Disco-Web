@@ -11,6 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,21 +22,21 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class loginBean {
 
-    private String userName;
     private String password;
+    private String correo;
 
-    /**
-     * Creates a new instance of loginBean
-     */
+
     public loginBean() {
+        HttpSession miSession=(HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+        miSession.setMaxInactiveInterval(5000);
     }
     
     public String authenticUser() throws UnsupportedEncodingException, Exception {
-        if ((getUserName() == null || getUserName().length() == 0) || (getPassword() == null || getPassword().length() == 0)) {
+        if ((getCorreo()== null || getCorreo().length() == 0) || (getPassword() == null || getPassword().length() == 0)) {
             JSFUtils.addWarningMessage("Debe ingresar un usuario y password válido");
             return "login";
         }
-        boolean success = authenticationService(getUserName(), getPassword());
+        boolean success = authenticationService(getCorreo(), getPassword());
         if (!success) {
             JSFUtils.addErrorMessage("Username o password incorrecto");
             return "login";
@@ -57,20 +59,6 @@ public class loginBean {
         return "registrarPropietario";
     }
     
-    
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     /**
      * @return the password
@@ -86,12 +74,25 @@ public class loginBean {
         this.password = password;
     }
 
-    private boolean authenticationService(String userName, String password) throws UnsupportedEncodingException, Exception {
+    private boolean authenticationService(String correo, String password) throws UnsupportedEncodingException, Exception {
         Demo d = new Demo();
-        d.getPropietarios(userName);
-        if (password.equals(Propietario.getPassword())) {
+        Propietario pr = new Propietario();
+        pr = d.getPropietarios(correo);
+        if (password.equals(pr.getPassword())) {
+            
+            HttpSession httpSession=(HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+            httpSession.setAttribute("correoElectronico", this.correo);
+            
             return true;
         }
         return false;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }

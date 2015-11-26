@@ -23,7 +23,6 @@ public class RegistrarPropietarioBean {
 
     private String nombres;
     private String apellidos;
-    private String userName;
     private String password;
     private String repPassword;
     private String correo;
@@ -65,7 +64,7 @@ public class RegistrarPropietarioBean {
     
     public boolean insertPropietario() throws SQLException{
         Demo d = new Demo();
-        return d.insertPropietario(nombres, apellidos, userName, password, correo);
+        return d.insertPropietario(nombres, apellidos, password, correo);
     }
     
     public String getNombres() {
@@ -107,16 +106,5 @@ public class RegistrarPropietarioBean {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-    
-    
-    
     
 }

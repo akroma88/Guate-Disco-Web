@@ -10,58 +10,59 @@ package com.usac.ecys.guate.disco.web.dto;
  * @author akroma
  */
 public class Propietario {
-    private static String nombres;
-    private static String apellidos;
-    private static String usuario;
-    private static String password;
-    private static String correo;
-    private static int id;
+    private String nombres;
+    private String apellidos;
+    private String usuario;
+    private String password;
+    private String correo;
+    private int id;
 
-    public static String getNombres() {
+    public String getNombres() {
         return nombres;
     }
 
-    public static void setNombres(String aNombres) {
-        nombres = aNombres;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
-    public static String getApellidos() {
+    public String getApellidos() {
         return apellidos;
     }
 
-    public static void setApellidos(String aApellidos) {
-        apellidos = aApellidos;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public static String getUsuario() {
+    public String getUsuario() {
         return usuario;
     }
 
-    public static void setUsuario(String aUsuario) {
-        usuario = aUsuario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public static void setPassword(String aPassword) {
-        password = aPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public static String getCorreo() {
+    public String getCorreo() {
         return correo;
     }
 
-    public static void setCorreo(String aCorreo) {
-        correo = aCorreo;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int aId) {
-        id = aId;
+    public void setId(int id) {
+        this.id = id;
     }
+
 }

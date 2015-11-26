@@ -18,17 +18,20 @@ public class Demo {
     ResultSet myRs = null;
     Connection c = null;
 
-    public void getPropietarios(String username) throws SQLException, UnsupportedEncodingException, Exception {
+    public Propietario getPropietarios(String correo) throws SQLException, UnsupportedEncodingException, Exception {
 
         c = DBClass.getConnection();
         myStmt = c.createStatement();
         String sql;
-            sql = "SELECT* FROM guateDiscoBD.Propietario where usuario = \"" + username + "\"";
+            sql = "SELECT* FROM guateDiscoBD.Propietario where correo = \"" + correo + "\"";
         myRs = myStmt.executeQuery(sql);
+        Propietario pr = new Propietario();
         while (myRs.next()) {
-            Propietario.setPassword(myRs.getString("password"));
-            Propietario.setId(myRs.getInt("idPropietario"));
+            pr.setPassword(myRs.getString("password"));
+            pr.setId(myRs.getInt("idPropietario"));
+            pr.setUsuario(myRs.getString("usuario"));
         }
+        return pr;
     }
 
         public boolean insertDisco(Disco d) throws SQLException {
@@ -39,8 +42,8 @@ public class Demo {
         "`paginaWeb`,`facebook`,`twitter`,`telefono`,`idPropietario`,`latitud`,`altitud`)\n" +
         "VALUES\n" +
         "(\""+d.getNombre()+"\",\""+d.getDireccion()+"\","+d.getZona()+","+d.getRank()+",\""+d.getDescripcion()+"\""
-                + ",\"img.png\",\""+d.getPaginaWeb()+"\",\""+d.getPaginaFb()+"\",\""+d.getPaginaTw()+"\""
-                + ","+d.getTelefono()+","+""+Propietario.getId()+","+d.getLatitud()+","+d.getAltitud()+");";
+                + ",\"img.png\",\""+d.getPaginaWeb()+"\",\""+d.getPaginaFb()+"\",\""+d.getPaginaTw()+"\"";
+                //+ ","+d.getTelefono()+","+""+Propietario.getId()+","+d.getLatitud()+","+d.getAltitud()+");";
         System.err.println("" + insert);
 
         try {
@@ -85,7 +88,7 @@ public class Demo {
         }
         
         
-        public boolean insertPropietario(String nombres, String apellidos, String userName,
+        public boolean insertPropietario(String nombres, String apellidos,
                 String pass, String correo) throws SQLException {
 
         boolean resultadoInser = false;
@@ -93,7 +96,7 @@ public class Demo {
         "(`nombres`,`apellidos`,`usuario`,\n" +
         "`password`,`correo`)\n" +
         "VALUES\n" +
-        "(\""+nombres+"\",\""+apellidos+"\",\""+userName+"\",\""+pass+"\",\""+correo+"\");";
+        "(\""+nombres+"\",\""+apellidos+"\",\""+pass+"\",\""+correo+"\");";
         System.err.println("" + insert);
 
         try {
@@ -118,18 +121,21 @@ public class Demo {
             sql = "Select correo from guateDiscoBD.Propietario where correo = \"" + correo + "\"";
         myRs = myStmt.executeQuery(sql);
         while (myRs.next()) {
-            Propietario.setPassword(myRs.getString("correo"));
+            Propietario pr = new Propietario();
+            pr.setPassword(myRs.getString("correo"));
             return myRs.getString("correo");
         }
         return "";
     }
         
     
-    public ArrayList getDiscos(int idPropietario) throws SQLException, UnsupportedEncodingException, Exception {
+    public ArrayList getDiscos(String correoPropietario) throws SQLException, UnsupportedEncodingException, Exception {
         ArrayList<Disco> discos = new ArrayList<Disco>();
         c = DBClass.getConnection();
         myStmt = c.createStatement();
-            String sql = "select * from guateDiscoBD.Discoteca where idPropietario = " + idPropietario + "";
+            String sql = "select * from guateDiscoBD.Discoteca d, guateDiscoBD.Propietario p"
+                    + " where p.idPropietario = d.idPropietario AND"
+                    + " p.correo= \"" + correoPropietario + "\";";
         System.out.println(""+sql);
 
         myRs = myStmt.executeQuery(sql);
